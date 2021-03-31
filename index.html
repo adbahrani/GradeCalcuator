@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- link style.css with index.html -->
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <!-- title the page -->
+    <title>ITS 36200-001 / Lab 2</title>
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <!-- link script.js with index.html -->
+  </head>
+
+  <body>
+    <!-- define the headings -->
+    <h1>Grade Calculator</h1>
+
+    <h2>ITS 36200-001 / Lab 4 / Sebastian kwiatek</h2>
+
+    <div class="container center">
+      <table align="center">
+        <tr>
+          <td style="width: 75%;">
+            <div id="tabs">
+              <ul>
+                <li><a href="#lab">Lab Grades</a></li>
+                <li><a href="#quiz">Quiz Grades</a></li>
+                <li><a href="#exam">Exam Grades</a></li>
+                <li><a href="#project">Project & Extra Credit</a></li>
+                <li><a href="#participation">Participation</a></li>
+              </ul>
+              <div id="lab">
+                <table align="center" id="inputTable">
+                  <!-- center the table and point to the inputTable declaration in style.css -->
+
+                  <!-- create a row in the table -->
+
+                  <!-- create and define two cells -->
+
+                  <tr class="odd">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Lab One
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input type="text" title="Please enter your grade here" />
+                    </td>
+                    <td style="padding: 4px;">
+                      Date: <input type="text" id="datepicker" />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+
+                  <tr class="even">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Lab Two
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input type="text" title="Please enter your grade here" />
+                    </td>
+                    <td style="padding: 4px;">
+                      Date: <input type="text" id="datepicker" />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+
+                  <tr class="odd">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Lab Three
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input type="text" title="Please enter your grade here" />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+
+                  <tr class="even">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Lab Four
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input type="text" title="Please enter your grade here" />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+                </table>
+              </div>
+              <div id="quiz">
+                <table align="center" id="inputTable">
+                  <tr class="odd">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Quiz One
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input
+                        type="text"
+                        class="quiz"
+                        title="Please enter your grade here"
+                      />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+
+                  <tr class="even">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Quiz Two
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input
+                        type="text"
+                        class="quiz"
+                        title="Please enter your grade here"
+                      />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+
+                  <tr class="odd">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Quiz Three
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input
+                        type="text"
+                        class="quiz"
+                        title="Please enter your grade here"
+                      />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+
+                  <tr class="even">
+                    <td style="padding-left: 12px; padding-right: 12px;">
+                      Quiz Four
+                    </td>
+                    <!-- define a single line text entry and specify lab1 as the id -->
+                    <td>
+                      <input
+                        type="text"
+                        class="quiz"
+                        title="Please enter your grade here"
+                      />
+                    </td>
+                    <!-- use onBlur for input validation and pass parameters that are validated -->
+                  </tr>
+                </table>
+              </div>
+              <div id="exam">
+                <p>
+                  <b>exam</b>
+                  Mauris eleifend est et turpis. Duis id erat. Suspendisse
+                  potenti. Aliquam vulputate, pede vel vehicula accumsan, mi
+                  neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum
+                  non ante. Class aptent
+                </p>
+              </div>
+
+              <div id="project">
+                <p>
+                  <b>project</b>
+                  Mauris eleifend est et turpis. Duis id erat. Suspendisse
+                  potenti.
+                </p>
+              </div>
+
+              <div id="participation">
+                <p>
+                  <b>participation</b>
+                </p>
+              </div>
+            </div>
+          </td>
+          <td style="width: 05%;"></td>
+          <td style="width: 25%; vertical-align: baseline;">
+            <div class="card" style="margin: 2px; padding: 10px;">
+              <h3><b>Score</b></h3>
+              <p>Lab: <label id="Lab"> 0.00</label></p>
+              <p>Quiz: <label id="Quiz"> 0.00</label></p>
+              <p>Exam: <label id="Exam"> 0.00</label></p>
+              <p>Project: <label id="Project"> 0.00</label></p>
+              <p>Participation: <label id="Participation"> 0.00</label></p>
+              <p>Total: <label id="Total"> 0.00</label></p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- JQuery Library  -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+      integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+      crossorigin="anonymous"
+    ></script>
+    <script language="javascript" src="script.js"></script>
+  </body>
+</html>
