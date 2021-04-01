@@ -22,7 +22,7 @@
     <div class="container center">
       <table align="center">
         <tr>
-          <td style="width: 75%;">
+          <td style="width: 75%">
             <div id="tabs">
               <ul>
                 <li><a href="#lab">Lab Grades</a></li>
@@ -32,43 +32,44 @@
                 <li><a href="#participation">Participation</a></li>
               </ul>
               <div id="lab">
-                <table align="center" id="inputTable">
-                  <!-- center the table and point to the inputTable declaration in style.css -->
-
-                  <!-- create a row in the table -->
-
-                  <!-- create and define two cells -->
-
+                <table align="center" id="labTable">
                   <tr class="odd">
-                    <td style="padding-left: 12px; padding-right: 12px;">
-                      Lab One
-                    </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
                     <td>
-                      <input type="text" title="Please enter your grade here" />
+                      Lab One:
+                      <input
+                        type="text"
+                        title="Please enter your grade here"
+                        id="amount"
+                      />
                     </td>
-                    <td style="padding: 4px;">
+
+                    <td style="padding: 12px">
+                      <div id="slider-range-max" class="sliders"></div>
+                    </td>
+
+                    <td style="padding: 4px">
                       Date: <input type="text" id="datepicker" />
                     </td>
                     <!-- use onBlur for input validation and pass parameters that are validated -->
                   </tr>
 
                   <tr class="even">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Lab Two
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
                     <td>
                       <input type="text" title="Please enter your grade here" />
                     </td>
-                    <td style="padding: 4px;">
+                    <td style="padding: 4px">
                       Date: <input type="text" id="datepicker" />
                     </td>
                     <!-- use onBlur for input validation and pass parameters that are validated -->
                   </tr>
 
                   <tr class="odd">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Lab Three
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
@@ -79,7 +80,7 @@
                   </tr>
 
                   <tr class="even">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Lab Four
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
@@ -93,7 +94,7 @@
               <div id="quiz">
                 <table align="center" id="inputTable">
                   <tr class="odd">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Quiz One
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
@@ -108,7 +109,7 @@
                   </tr>
 
                   <tr class="even">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Quiz Two
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
@@ -123,7 +124,7 @@
                   </tr>
 
                   <tr class="odd">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Quiz Three
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
@@ -138,7 +139,7 @@
                   </tr>
 
                   <tr class="even">
-                    <td style="padding-left: 12px; padding-right: 12px;">
+                    <td style="padding-left: 12px; padding-right: 12px">
                       Quiz Four
                     </td>
                     <!-- define a single line text entry and specify lab1 as the id -->
@@ -178,9 +179,9 @@
               </div>
             </div>
           </td>
-          <td style="width: 05%;"></td>
-          <td style="width: 25%; vertical-align: baseline;">
-            <div class="card" style="margin: 2px; padding: 10px;">
+          <td style="width: 05%"></td>
+          <td style="width: 25%; vertical-align: baseline">
+            <div class="card" style="margin: 2px; padding: 10px">
               <h3><b>Score</b></h3>
               <p>Lab: <label id="Lab"> 0.00</label></p>
               <p>Quiz: <label id="Quiz"> 0.00</label></p>
@@ -192,6 +193,8 @@
           </td>
         </tr>
       </table>
+
+      <button id="test">Test</button>
     </div>
 
     <!-- JQuery Library  -->

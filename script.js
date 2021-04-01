@@ -6,15 +6,18 @@ $(document).ready(function () {
   $("#tabs").tabs();
   $("#datepicker").datepicker();
 
-  let totals = {
-    Lab: 0,
-    Quiz: 0,
-    Exam: 0,
-    Project: 0,
-    Participation: 0
-  };
+  $($(".sliders")[0]).slider({
+    range: "max",
+    min: 0,
+    max: 10,
+    value: 0,
+    slide: function (event, ui) {
+      $("#amount").val(ui.value);
+    }
+  });
+  $("#amount").val($("#slider-range-max").slider("value"));
 
-  let scores = {
+  let totals = {
     Lab: 0,
     Quiz: 0,
     Exam: 0,
@@ -36,7 +39,51 @@ $(document).ready(function () {
     "Ten"
   ];
 
-  let fieldType = $("#selector").val();
+  let generateField = function () {
+    fieldType = "Lab";
+    totals[fieldType]++;
+    let currentField = totals[fieldType];
+
+    let html = `
+    <tr class="odd">
+
+    <td >${fieldType} ${numbers[totals[fieldType]]} :
+    <input
+		type="text"
+    title="Please enter your grade here"
+    class=${fieldType}
+	  />              
+             
+                    <td style="padding: 12px">
+                      <div class="sliders1"></div>
+                    </td>
+
+                    <td style="padding: 4px">
+                      Date: <input type="text" id="datepicker" />
+                    </td>
+               
+     </tr>
+`;
+
+    for (let index = 0; index < 3; index++) {
+      $($(".even")[0]).after(html);
+    }
+
+    $(".sliders1").each(function () {
+      // read initial values from markup and remove that
+      // var value = parseInt($(this).text(), 10);
+      $(this).slider({
+        range: "max",
+        min: 0,
+        max: 10,
+        value: 0
+      });
+    });
+  };
+
+  $("#test").click(function () {
+    generateField();
+  });
 
   $("#addField").click(function () {
     let rowName = fieldType;
@@ -59,7 +106,6 @@ $(document).ready(function () {
 	  <input
 		type="text"
     class=${fieldType}
-		onBlur="validateUserInput('lab',1)"
 	  />
 	</td>
   </tr>`;
