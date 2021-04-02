@@ -15,10 +15,9 @@ $(document).ready(function () {
       $("#amount").val(ui.value);
     }
   });
-  $("#amount").val($("#slider-range-max").slider("value"));
 
   let totals = {
-    Lab: 0,
+    Lab: 1,
     Quiz: 0,
     Exam: 0,
     Project: 0,
@@ -45,7 +44,7 @@ $(document).ready(function () {
     let currentField = totals[fieldType];
 
     let html = `
-    <tr class="odd">
+    <tr class="odd row">
 
     <td >${fieldType} ${numbers[totals[fieldType]]} :
     <input
@@ -53,36 +52,33 @@ $(document).ready(function () {
     title="Please enter your grade here"
     class=${fieldType}
 	  />              
-             
-                    <td style="padding: 12px">
-                      <div class="sliders1"></div>
-                    </td>
+     <td style="padding: 12px">
+        <div class="sliders"></div>
+       </td>
 
-                    <td style="padding: 4px">
-                      Date: <input type="text" id="datepicker" />
-                    </td>
+           <td style="padding: 4px">
+            Date: <input type="text" id="datepicker" />
+       </td>
                
      </tr>
 `;
+    $(".row").last().after(html);
 
-    for (let index = 0; index < 3; index++) {
-      $($(".even")[0]).after(html);
-    }
-
-    $(".sliders1").each(function () {
-      // read initial values from markup and remove that
-      // var value = parseInt($(this).text(), 10);
-      $(this).slider({
-        range: "max",
-        min: 0,
-        max: 10,
-        value: 0
-      });
+    $(".sliders").last().slider({
+      range: "max",
+      min: 0,
+      max: 10,
+      value: 0
     });
+
   };
 
   $("#test").click(function () {
-    generateField();
+    for (let index = 0; index < 3; index++) {
+      generateField();
+    }
+
+    console.log("Click");
   });
 
   $("#addField").click(function () {
