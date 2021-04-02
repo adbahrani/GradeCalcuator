@@ -17,7 +17,7 @@ $(document).ready(function () {
   });
 
   let totals = {
-    Lab: 1,
+    Lab: 0,
     Quiz: 0,
     Exam: 0,
     Project: 0,
@@ -38,13 +38,13 @@ $(document).ready(function () {
     "Ten"
   ];
 
-  let generateField = function () {
+  let generateField = function (isEven) {
     fieldType = "Lab";
     totals[fieldType]++;
     let currentField = totals[fieldType];
 
     let html = `
-    <tr class="odd row">
+    <tr class="${isEven ? "even" : "odd"} row">
 
     <td >${fieldType} ${numbers[totals[fieldType]]} :
     <input
@@ -57,7 +57,7 @@ $(document).ready(function () {
        </td>
 
            <td style="padding: 4px">
-            Date: <input type="text" id="datepicker" />
+            Date: <input type="text" class="datePicker" />
        </td>
                
      </tr>
@@ -71,12 +71,22 @@ $(document).ready(function () {
       value: 0
     });
 
+    register(fieldType);
   };
 
   $("#test").click(function () {
-    for (let index = 0; index < 3; index++) {
-      generateField();
+    for (let index = 1; index < 10; index++) {
+      generateField(index % 2 == 0);
     }
+
+    $($(".sliders")).each((index, element) => {
+      $($(".datePicker")[index]).datepicker();
+      $(element).slider({
+        slide: function (event, ui) {
+          $($(".row .Lab")[index]).val(ui.value);
+        }
+      });
+    });
 
     console.log("Click");
   });
@@ -114,18 +124,12 @@ $(document).ready(function () {
     register(fieldType);
   });
 
-  $("#selector").change(function () {
-    fieldType = $("#selector").val();
-  });
-
   let register = function (fieldName) {
+    console.log(fieldName);
     //console.log($(".row." + fieldName).last());
-    let currentRow = $(".row." + fieldName).last();
-    currentRow.on("change", "input[type='text']", function () {
+    let currentRow = $(".row .Lab").last();
+    currentRow.on("input", function () {
       console.log("value", $(this).val());
-      console.log("curr sc", scores[fieldName]);
-
-      let value = $(this).val();
 
       let fields = $(`.row.${fieldName} input`);
       let values = 0;
