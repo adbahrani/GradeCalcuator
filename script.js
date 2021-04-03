@@ -6,6 +6,28 @@ $(document).ready(function () {
   $("#tabs").tabs();
   $("#datepicker").datepicker();
 
+  let progressbar = $("#progressbar"),
+    progressLabel = $(".progress-label");
+
+  progressbar.progressbar({
+    value: 0,
+    change: function () {
+      progressLabel.text(progressbar.progressbar("value") + "%");
+    },
+    complete: function () {
+      progressLabel.text("Complete!");
+    }
+  });
+
+  function progress() {
+    var val = progressbar.progressbar("value") || 0;
+
+    let number = Object.keys(values[fieldType]).length;
+    console.log(Object.keys(values[fieldType]).length);
+
+    progressbar.progressbar("value", number * 10);
+  }
+
   $($(".sliders")[0]).slider({
     range: "max",
     min: 0,
@@ -24,6 +46,13 @@ $(document).ready(function () {
     Participation: 0
   };
 
+  let values = {
+    Lab: {},
+    Quiz: [],
+    Exam: [],
+    Project: [],
+    Participation: []
+  };
   let numbers = [
     "",
     "One ",
@@ -48,7 +77,7 @@ $(document).ready(function () {
 
     <td >${fieldType} ${numbers[totals[fieldType]]} :
     <input
-		type="text"
+		type="number"
     title="Please enter your grade here"
     class=${fieldType}
 	  />              
@@ -74,22 +103,22 @@ $(document).ready(function () {
     register(fieldType);
   };
 
-  $("#test").click(function () {
-    for (let index = 1; index < 10; index++) {
+  let init = function () {
+    for (let index = 1; index < 4; index++) {
       generateField(index % 2 == 0);
     }
-
     $($(".sliders")).each((index, element) => {
       $($(".datePicker")[index]).datepicker();
       $(element).slider({
         slide: function (event, ui) {
           $($(".row .Lab")[index]).val(ui.value);
+          values[fieldType][index] = ui.value;
+          console.log("Index", values[fieldType][index]);
+          progress();
         }
       });
     });
-
-    console.log("Click");
-  });
+  };
 
   $("#addField").click(function () {
     let rowName = fieldType;
@@ -125,20 +154,26 @@ $(document).ready(function () {
   });
 
   let register = function (fieldName) {
-    console.log(fieldName);
+    //console.log(fieldName);
     //console.log($(".row." + fieldName).last());
     let currentRow = $(".row .Lab").last();
     currentRow.on("input", function () {
       console.log("value", $(this).val());
+      // console.log("value", $(this));
+
+      let index = $(".Lab").index($(this));
+
+      values[fieldType][index] = $(this).val();
+      progress();
 
       let fields = $(`.row.${fieldName} input`);
-      let values = 0;
-      for (let input of fields) {
-        values += isNaN(parseFloat(input.value)) ? 0 : parseFloat(input.value);
-      }
+      // let values = 0;
+      // for (let input of fields) {
+      //   values += isNaN(parseFloat(input.value)) ? 0 : parseFloat(input.value);
+      // }
 
-      let score = values / totals[fieldName];
-      $(`#${fieldName}`).html(score.toFixed(2));
+      // let score = values / totals[fieldName];
+      // $(`#${fieldName}`).html(score.toFixed(2));
 
       let labels = $(".card label");
       let finalTotal = 0;
@@ -154,4 +189,6 @@ $(document).ready(function () {
       $(`#Total`).html(finalTotal.toFixed(2));
     });
   };
+
+  init();
 });
