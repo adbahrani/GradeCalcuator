@@ -44,12 +44,12 @@ $(document).ready(function () {
   };
 
   let fieldDetails = {
-    Lab: { max: 10, score: 25 },
-    Quiz: { max: 10, score: 10 },
-    Exam: { max: 2, score: 100 },
-    Extra: { max: 1, score: 100 },
-    Project: { max: 1, score: 25 },
-    Participation: { max: 15, score: 5 }
+    Lab: { max: 10, score: 25, percentage: 30 },
+    Quiz: { max: 10, score: 10, percentage: 10 },
+    Exam: { max: 2, score: 100, percentage: 30 },
+    Extra: { max: 1, score: 25, percentage: 5 },
+    Project: { max: 1, score: 100, percentage: 20 },
+    Participation: { max: 15, score: 5, percentage: 10 }
   };
 
   //Track progress and values
@@ -108,7 +108,7 @@ $(document).ready(function () {
     $(".sliders").last().slider({
       range: "max",
       min: 0,
-      max: 25,
+      max: fieldDetails[fieldType].score,
       value: 0
     });
 
@@ -116,10 +116,6 @@ $(document).ready(function () {
   };
 
   let calculator = function (fieldType) {
-    //let fields = $(`.row input.${fieldType}`);
-
-    console.log("Field", values[fieldType]);
-
     let score = 0;
 
     let currentField = values[fieldType];
@@ -133,13 +129,39 @@ $(document).ready(function () {
     $(`#${fieldType}`).html(score.toFixed(2));
 
     let labels = $(".card label");
+
     let finalTotal = 0;
     for (let input of labels) {
-      finalTotal += isNaN(parseFloat(input.textContent))
-        ? 0
-        : parseFloat(input.textContent);
+      if (input.id == "Total") break;
+      let id = input.id;
+      let grade = parseFloat(input.textContent) / fieldDetails[id].score;
+
+      finalTotal += grade * fieldDetails[id].percentage;
     }
-    $(`#Total`).html(finalTotal.toFixed(2));
+
+    console.log("Score:", finalTotal);
+
+    switch (true) {
+      case finalTotal >= 90:
+        finalTotal = "A";
+        break;
+      case finalTotal >= 80:
+        finalTotal = "B";
+        break;
+      case finalTotal >= 70:
+        finalTotal = "C";
+        break;
+      case finalTotal >= 60:
+        finalTotal = "D";
+        break;
+      case finalTotal < 60:
+        finalTotal = "F";
+        break;
+      default:
+        break;
+    }
+
+    $(`#Total`).html(finalTotal);
   };
   let addSlider = function (fieldType) {
     $($(`.sliders.${fieldType}`)).each((index, element) => {
