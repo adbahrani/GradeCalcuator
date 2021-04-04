@@ -23,9 +23,9 @@ $(document).ready(function () {
     for (let value in values) {
       total += Object.keys(values[value]).length;
     }
-    console.log(total);
+
     let percentage = (total * 2.6).toFixed(2);
-    console.log(percentage);
+    // console.log(percentage);
 
     progressbar.progressbar(
       "value",
@@ -33,20 +33,32 @@ $(document).ready(function () {
     );
   }
 
+  //Track totals
   let totals = {
     Lab: 0,
     Quiz: 0,
     Exam: 0,
+    Extra: 0,
     Project: 0,
     Participation: 0
   };
 
+  let fieldDetails = {
+    Lab: { max: 10, score: 25 },
+    Quiz: { max: 10, score: 10 },
+    Exam: { max: 2, score: 100 },
+    Extra: { max: 1, score: 100 },
+    Project: { max: 1, score: 25 },
+    Participation: { max: 15, score: 5 }
+  };
+
+  //Track progress and values
   let values = {
     Lab: {},
     Quiz: {},
     Exam: {},
-    Project: {},
     Extra: {},
+    Project: {},
     Participation: {}
   };
   let numbers = [
@@ -60,14 +72,19 @@ $(document).ready(function () {
     "Seven ",
     "Eight ",
     "Nine ",
-    "Ten"
+    "Ten",
+    "Eleven",
+    "Twelve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen"
   ];
 
   let generateField = function (isEven, fieldType) {
     totals[fieldType]++;
 
     let html = `
-    <tr class="${isEven ? "even" : "odd"} row ${fieldType}">
+    <tr class="${isEven ? "even" : "odd"} row ${fieldType} dynamic">
 
     <td >${fieldType} ${numbers[totals[fieldType]]} :
     <input
@@ -98,6 +115,36 @@ $(document).ready(function () {
     register(fieldType);
   };
 
+  let calculator = function (fieldType) {
+    //let fields = $(`.row input.${fieldType}`);
+
+    console.log("Field", values[fieldType]);
+
+    let score = 0;
+
+    let currentField = values[fieldType];
+    for (let key in currentField) {
+      console.log("Calc", currentField);
+      score += parseFloat(currentField[key]);
+    }
+
+    score = score / totals[fieldType];
+    console.log(score);
+    $(`#${fieldType}`).html(score.toFixed(2));
+
+    let labels = $(".card label");
+    let finalTotal = 0;
+    for (let input of labels) {
+      if (input == labels[5]) {
+        //alert("Break");
+        break;
+      }
+      finalTotal += isNaN(parseFloat(input.textContent))
+        ? 0
+        : parseFloat(input.textContent);
+    }
+    $(`#Total`).html(finalTotal.toFixed(2));
+  };
   let addSlider = function (fieldType) {
     $($(`.sliders.${fieldType}`)).each((index, element) => {
       $($(`.${fieldType} input.datePicker`)[index]).datepicker();
@@ -107,7 +154,8 @@ $(document).ready(function () {
           $($(`input.${fieldType}`)[index]).val(ui.value);
           values[fieldType][index] = ui.value;
           console.log("Index", values[fieldType][index]);
-          progress(fieldType);
+          progress();
+          calculator(fieldType);
         }
       });
     });
@@ -116,9 +164,9 @@ $(document).ready(function () {
   let init = function () {
     for (let type in totals) {
       console.log("type", type);
-      if (type == "Exam") break;
+      //if (type == "Exam") break;
 
-      for (let index = 0; index < 4; index++) {
+      for (let index = 0; index < fieldDetails[type].max; index++) {
         generateField(index % 2 == 0, type);
       }
 
@@ -127,39 +175,20 @@ $(document).ready(function () {
   };
 
   let register = function (fieldType) {
-    //console.log(fieldName);
+    console.log(fieldType);
     //console.log($(".row." + fieldName).last());
-    let currentRow = $(".row").last();
+    let currentRow = $(`.row.dynamic input.${fieldType}`).last();
     currentRow.on("input", function () {
       console.log("value", $(this).val());
       // console.log("value", $(this));
 
-      let index = $(".Lab").index($(this));
+      let index = $(`input.${fieldType}`).index($(this));
+      console.log("Index", index);
+      console.log("value", values[fieldType]);
 
       values[fieldType][index] = $(this).val();
-      progress(fieldType);
-
-      let fields = $(`.row.${fieldType} input`);
-      // let values = 0;
-      // for (let input of fields) {
-      //   values += isNaN(parseFloat(input.value)) ? 0 : parseFloat(input.value);
-      // }
-
-      // let score = values / totals[fieldName];
-      // $(`#${fieldName}`).html(score.toFixed(2));
-
-      let labels = $(".card label");
-      let finalTotal = 0;
-      for (let input of labels) {
-        if (input == labels[5]) {
-          //alert("Break");
-          break;
-        }
-        finalTotal += isNaN(parseFloat(input.textContent))
-          ? 0
-          : parseFloat(input.textContent);
-      }
-      $(`#Total`).html(finalTotal.toFixed(2));
+      progress();
+      calculator(fieldType);
     });
   };
 
