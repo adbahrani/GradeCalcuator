@@ -25,12 +25,13 @@ $(document).ready(function () {
     }
 
     let percentage = (total * 2.6).toFixed(2);
-    // console.log(percentage);
 
     progressbar.progressbar(
       "value",
       total == 39 ? 100 : parseFloat(percentage)
     );
+
+    CookieUpdate();
   }
 
   //Track totals
@@ -181,24 +182,22 @@ $(document).ready(function () {
 
   let init = function () {
     for (let type in totals) {
-      console.log("type", type);
-      //if (type == "Exam") break;
-
       for (let index = 0; index < fieldDetails[type].max; index++) {
         generateField(index % 2 == 0, type);
       }
 
       addSlider(type);
     }
+
+    checkCookies();
   };
 
   let register = function (fieldType) {
     console.log(fieldType);
-    //console.log($(".row." + fieldName).last());
+
     let currentRow = $(`.row.dynamic input.${fieldType}`).last();
     currentRow.on("input", function () {
       console.log("value", $(this).val());
-      // console.log("value", $(this));
 
       let index = $(`input.${fieldType}`).index($(this));
       console.log("Index", index);
@@ -208,6 +207,37 @@ $(document).ready(function () {
       progress();
       calculator(fieldType);
     });
+  };
+
+  let CookieUpdate = function saveToCookie() {
+    console.log(values);
+    let data = JSON.stringify(values);
+    document.cookie = "assignments=" + data + ";";
+  };
+
+  let checkCookies = function () {
+    let data;
+    let cookies = document.cookie.split("=");
+    let cookieIndex = cookies.indexOf("assignments");
+    if (cookieIndex >= 0) {
+      //Cookies found
+      data = JSON.parse(cookies[++cookieIndex]);
+      console.log(data);
+
+      values = data;
+
+      progress();
+
+      for (let field in data) {
+        let fieldValues = data[field];
+        calculator(field);
+
+        for (let index in fieldValues) {
+          let value = fieldValues[index];
+          $(`input.${field}`)[index].value = value;
+        }
+      }
+    }
   };
 
   init();
