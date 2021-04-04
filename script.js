@@ -135,10 +135,6 @@ $(document).ready(function () {
     let labels = $(".card label");
     let finalTotal = 0;
     for (let input of labels) {
-      if (input == labels[5]) {
-        //alert("Break");
-        break;
-      }
       finalTotal += isNaN(parseFloat(input.textContent))
         ? 0
         : parseFloat(input.textContent);
