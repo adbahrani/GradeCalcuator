@@ -4,7 +4,6 @@ $(document).ready(function () {
 
   $(document).tooltip();
   $("#tabs").tabs();
-  $("#datepicker").datepicker();
 
   let progressbar = $("#progressbar"),
     progressLabel = $(".progress-label");
@@ -20,23 +19,19 @@ $(document).ready(function () {
   });
 
   function progress() {
-    var val = progressbar.progressbar("value") || 0;
-
-    let number = Object.keys(values[fieldType]).length;
-    console.log(Object.keys(values[fieldType]).length);
-
-    progressbar.progressbar("value", number * 10);
-  }
-
-  $($(".sliders")[0]).slider({
-    range: "max",
-    min: 0,
-    max: 10,
-    value: 0,
-    slide: function (event, ui) {
-      $("#amount").val(ui.value);
+    let total = 0;
+    for (let value in values) {
+      total += Object.keys(values[value]).length;
     }
-  });
+    console.log(total);
+    let percentage = (total * 2.6).toFixed(2);
+    console.log(percentage);
+
+    progressbar.progressbar(
+      "value",
+      total == 39 ? 100 : parseFloat(percentage)
+    );
+  }
 
   let totals = {
     Lab: 0,
@@ -48,10 +43,11 @@ $(document).ready(function () {
 
   let values = {
     Lab: {},
-    Quiz: [],
-    Exam: [],
-    Project: [],
-    Participation: []
+    Quiz: {},
+    Exam: {},
+    Project: {},
+    Extra: {},
+    Participation: {}
   };
   let numbers = [
     "",
@@ -67,13 +63,11 @@ $(document).ready(function () {
     "Ten"
   ];
 
-  let generateField = function (isEven) {
-    fieldType = "Lab";
+  let generateField = function (isEven, fieldType) {
     totals[fieldType]++;
-    let currentField = totals[fieldType];
 
     let html = `
-    <tr class="${isEven ? "even" : "odd"} row">
+    <tr class="${isEven ? "even" : "odd"} row ${fieldType}">
 
     <td >${fieldType} ${numbers[totals[fieldType]]} :
     <input
@@ -81,8 +75,8 @@ $(document).ready(function () {
     title="Please enter your grade here"
     class=${fieldType}
 	  />              
-     <td style="padding: 12px">
-        <div class="sliders"></div>
+     <td style="padding: 12px; width: 100%; min-width: 100px">
+        <div class="sliders ${fieldType}"></div>
        </td>
 
            <td style="padding: 4px">
@@ -91,72 +85,51 @@ $(document).ready(function () {
                
      </tr>
 `;
-    $(".row").last().after(html);
+
+    $(`.row.${fieldType}`).last().after(html);
 
     $(".sliders").last().slider({
       range: "max",
       min: 0,
-      max: 10,
+      max: 25,
       value: 0
     });
 
     register(fieldType);
   };
 
-  let init = function () {
-    for (let index = 1; index < 4; index++) {
-      generateField(index % 2 == 0);
-    }
-    $($(".sliders")).each((index, element) => {
-      $($(".datePicker")[index]).datepicker();
+  let addSlider = function (fieldType) {
+    $($(`.sliders.${fieldType}`)).each((index, element) => {
+      $($(`.${fieldType} input.datePicker`)[index]).datepicker();
+
       $(element).slider({
         slide: function (event, ui) {
-          $($(".row .Lab")[index]).val(ui.value);
+          $($(`input.${fieldType}`)[index]).val(ui.value);
           values[fieldType][index] = ui.value;
           console.log("Index", values[fieldType][index]);
-          progress();
+          progress(fieldType);
         }
       });
     });
   };
 
-  $("#addField").click(function () {
-    let rowName = fieldType;
-    totals[fieldType]++;
-    let currentField = totals[fieldType];
-    console.log(currentField);
+  let init = function () {
+    for (let type in totals) {
+      console.log("type", type);
+      if (type == "Exam") break;
 
-    let html = `<tr class="${
-      totals[fieldType] % 2 !== 0 ? "even" : "odd"
-    } ${rowName} row"  >
-    <td  colspan="2">${fieldType} ${numbers[totals[fieldType]]}</td>
-    `;
+      for (let index = 0; index < 4; index++) {
+        generateField(index % 2 == 0, type);
+      }
 
-    if (currentField == 11) {
-      alert(`Can't add more ${fieldType}s`);
-      return;
+      addSlider(type);
     }
+  };
 
-    html += `<td  colspan="2">
-	  <input
-		type="text"
-    class=${fieldType}
-	  />
-	</td>
-  </tr>`;
-    // console.log(".row." + rowName);
-
-    $(".row." + rowName)
-      .last()
-      .after(html);
-
-    register(fieldType);
-  });
-
-  let register = function (fieldName) {
+  let register = function (fieldType) {
     //console.log(fieldName);
     //console.log($(".row." + fieldName).last());
-    let currentRow = $(".row .Lab").last();
+    let currentRow = $(".row").last();
     currentRow.on("input", function () {
       console.log("value", $(this).val());
       // console.log("value", $(this));
@@ -164,9 +137,9 @@ $(document).ready(function () {
       let index = $(".Lab").index($(this));
 
       values[fieldType][index] = $(this).val();
-      progress();
+      progress(fieldType);
 
-      let fields = $(`.row.${fieldName} input`);
+      let fields = $(`.row.${fieldType} input`);
       // let values = 0;
       // for (let input of fields) {
       //   values += isNaN(parseFloat(input.value)) ? 0 : parseFloat(input.value);

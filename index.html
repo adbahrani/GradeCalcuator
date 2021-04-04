@@ -28,99 +28,18 @@
                 <li><a href="#lab">Lab Grades</a></li>
                 <li><a href="#quiz">Quiz Grades</a></li>
                 <li><a href="#exam">Exam Grades</a></li>
-                <li><a href="#project">Project & Extra Credit</a></li>
+                <li><a href="#project">Project</a></li>
+                <li><a href="#extra">Extra Credit</a></li>
                 <li><a href="#participation">Participation</a></li>
               </ul>
               <div id="lab">
                 <table align="center" id="labTable">
-                  <tr class="even row">
-                    <!-- define a single line text entry and specify lab1 as the id -->
-                    <td>
-                      Lab One:
-                      <input
-                        type="text"
-                        title="Please enter your grade here"
-                        id="amount"
-                        class="Lab"
-                      />
-                    </td>
-
-                    <td style="padding: 12px; width: 100%; min-width: 100px">
-                      <div id="slider-range-max" class="sliders"></div>
-                    </td>
-
-                    <td style="padding: 4px">
-                      Date: <input type="text" id="datepicker" />
-                    </td>
-                    <!-- use onBlur for input validation and pass parameters that are validated -->
-                  </tr>
+                  <tr class="even row Lab"></tr>
                 </table>
-                <br />
-                <div id="progressbar">
-                  <div class="progress-label">0%</div>
-                </div>
               </div>
               <div id="quiz">
                 <table align="center" id="inputTable">
-                  <tr class="odd">
-                    <td style="padding-left: 12px; padding-right: 12px">
-                      Quiz One
-                    </td>
-                    <!-- define a single line text entry and specify lab1 as the id -->
-                    <td>
-                      <input
-                        type="text"
-                        class="quiz"
-                        title="Please enter your grade here"
-                      />
-                    </td>
-                    <!-- use onBlur for input validation and pass parameters that are validated -->
-                  </tr>
-
-                  <tr class="even">
-                    <td style="padding-left: 12px; padding-right: 12px">
-                      Quiz Two
-                    </td>
-                    <!-- define a single line text entry and specify lab1 as the id -->
-                    <td>
-                      <input
-                        type="text"
-                        class="quiz"
-                        title="Please enter your grade here"
-                      />
-                    </td>
-                    <!-- use onBlur for input validation and pass parameters that are validated -->
-                  </tr>
-
-                  <tr class="odd">
-                    <td style="padding-left: 12px; padding-right: 12px">
-                      Quiz Three
-                    </td>
-                    <!-- define a single line text entry and specify lab1 as the id -->
-                    <td>
-                      <input
-                        type="text"
-                        class="quiz"
-                        title="Please enter your grade here"
-                      />
-                    </td>
-                    <!-- use onBlur for input validation and pass parameters that are validated -->
-                  </tr>
-
-                  <tr class="even">
-                    <td style="padding-left: 12px; padding-right: 12px">
-                      Quiz Four
-                    </td>
-                    <!-- define a single line text entry and specify lab1 as the id -->
-                    <td>
-                      <input
-                        type="text"
-                        class="quiz"
-                        title="Please enter your grade here"
-                      />
-                    </td>
-                    <!-- use onBlur for input validation and pass parameters that are validated -->
-                  </tr>
+                  <tr class="row Quiz even"></tr>
                 </table>
               </div>
               <div id="exam">
@@ -136,6 +55,14 @@
               <div id="project">
                 <p>
                   <b>project</b>
+                  Mauris eleifend est et turpis. Duis id erat. Suspendisse
+                  potenti.
+                </p>
+              </div>
+
+              <div id="extra">
+                <p>
+                  <b>Extra Credit</b>
                   Mauris eleifend est et turpis. Duis id erat. Suspendisse
                   potenti.
                 </p>
@@ -162,6 +89,11 @@
           </td>
         </tr>
       </table>
+
+      <br />
+      <div id="progressbar">
+        <div class="progress-label">0%</div>
+      </div>
 
       <button id="test">Test</button>
     </div>
